@@ -23,7 +23,7 @@ const getNewData = async () => {
 	let page = 1;
 	while (true) {
 		const list = (
-				await fetch('https://api.github.com/users/plibither8/followers?per_page=100&page='+(page++))
+				await fetch('https://api.github.com/users/AnandChowdhary/followers?per_page=100&page='+(page++))
 				.then(res => res.json())
 			).map(fol => fol.login);
 
@@ -42,21 +42,23 @@ const compareData = (oldData, newData) => ({
 });
 
 const notify = async (changes, followerCount) => {
-	let message = '*🔔 GitHub followers list updated!*';
-	message += `\nNumber of followers: ${followerCount}`;
+	let message = '';
+	message += `Number of followers: ${followerCount}`;
 
 	if (changes.removed.length > 0) {
-		message += '\n\nUnfollowed:\n';
-		message += changes.removed.map(fol => `- [${fol}](https://github.com/${fol})`).join('\n');
+		message += '\n\nUnfollowed by:\n';
+		message += changes.removed.map(fol => `- <https://github.com/${fol}|${fol}>`).join('\n');
 	}
 	if (changes.added.length > 0) {
-		message += '\n\nFollowed:\n';
-		message += changes.added.map(fol => `- [${fol}](https://github.com/${fol})`).join('\n');
+		message += '\n\nNew followers:\n';
+		message += changes.added.map(fol => `- <https://github.com/${fol}|${fol}>`).join('\n');
 	}
 
 	await fetch(`https://hooks.slack.com/services/${process.env.SLACK_WEBHOOK}`, {
 		method: 'POST',
 		body: JSON.stringify({
+			username: "github",
+			icon_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
 			text: message
 		}),
 		headers: {
