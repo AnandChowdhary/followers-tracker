@@ -57,8 +57,8 @@ const notify = async (changes, followerCount) => {
 	await fetch(`https://hooks.slack.com/services/${process.env.SLACK_WEBHOOK}`, {
 		method: 'POST',
 		body: JSON.stringify({
-			username: "github",
-			icon_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png",
+			username: "followers-tracker",
+			icon_url: "https://cdn3.iconfinder.com/data/icons/inficons/512/github.png",
 			text: message
 		}),
 		headers: {
