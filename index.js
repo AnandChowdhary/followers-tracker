@@ -54,11 +54,10 @@ const notify = async (changes, followerCount) => {
 		message += changes.added.map(fol => `- [${fol}](https://github.com/${fol})`).join('\n');
 	}
 
-	await fetch(`https://tg.mihir.ch/${TG_BOT_NAME}`, {
+	await fetch(`https://hooks.slack.com/services/${process.env.SLACK_WEBHOOK}`, {
 		method: 'POST',
 		body: JSON.stringify({
-			text: message,
-			secret: TG_BOT_SECRET
+			text: message
 		}),
 		headers: {
 			'Content-Type': 'application/json'
