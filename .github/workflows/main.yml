@@ -26,6 +26,5 @@ jobs:
       run: node index
       env:
         GIST_ID: ${{ secrets.GIST_ID }}
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        TG_BOT_NAME: ${{ secrets.TG_BOT_NAME }}
-        TG_BOT_SECRET: ${{ secrets.TG_BOT_SECRET }}
